@@ -13,6 +13,9 @@ import java.util.ArrayList;
  */
 public class Analizador {
 
+    /**
+     * Utilizare ArrayList de String para identificar en la cadena los Tokens
+     */
     private String cadenaEntrada;
     private ArrayList<String> enteros;
     private ArrayList<String> decimales;
@@ -37,6 +40,12 @@ public class Analizador {
         analizar(this.cadenaEntrada);
     }
 
+    /**
+     * El Analizador de la cadena hace un recorrido del string
+     *
+     * @param cadenaEntrada
+     */
+
     private void analizar(String cadenaEntrada) {
         char[] arreglo = cadenaEntrada.toCharArray();
 
@@ -45,16 +54,13 @@ public class Analizador {
                 arreglo[i] = ' ';
             }
         }
-        System.out.println(String.valueOf(arreglo));
+
         String cadena = String.valueOf(arreglo);
-        System.out.println("cadena original: " + cadena);
-        String abecedario = "abcdefghijklmnopqrstuvwxyzñ";
-        String digitos = "1234567890";
+        String abecedario = "abcdefghijklmnñopqrstuvwxyz";
+        String digitos = "0123456789";
         String parte = "";
-        int ultimaParte = 0;
         Posicion posicion = null;
         for (int i = 0; i < cadena.length(); i++) {
-            System.out.println("carater --> " + cadena.charAt(i));
             if (!esEspacio(String.valueOf(cadena.charAt(i)))) {
                 parte += cadena.charAt(i);
             } else if (((cadena.charAt(i) == '\n'))
@@ -65,16 +71,15 @@ public class Analizador {
                 continue;
             }
         }
+
         if (posicion != null) {
             String ultimaCadena = cadena.substring(posicion.getPosicon() + 1, cadena.length());
-            System.out.println("ultima cadena -- > " + ultimaCadena);
             partes.add(ultimaCadena);
         }
         if (this.contieneSoloUnaCadena(cadena)) {
             partes.add(cadena);
         }
         for (String parteCadena : partes) {
-            System.out.println("cadena -> " + parteCadena);
             if (esEntero(parteCadena, digitos)) {
                 this.enteros.add(parteCadena);
             }
@@ -97,42 +102,45 @@ public class Analizador {
                 this.errores.add(parteCadena);
             }
         }
-        System.out.println("");
-        System.out.println("lista enteros:");
+
         this.informacion += "NUMEROS ENTEROS:\n";
         for (String parte1 : enteros) {
-            this.informacion += parte1 + "\n";
-            System.out.println(parte1);
+            this.informacion += parte1 + "\n";;
         }
-        System.out.println("lista decimales:\n");
         this.informacion += "NUMEROS DECIMALES\n";
         for (String parte1 : decimales) {
             this.informacion += parte1 + "\n";
-            System.out.println(parte1);
         }
         this.informacion += "LISTA IDENTIFICADORES:\n";
-        System.out.println("LISTA identificadores");
         for (String identificadore : identificadores) {
             this.informacion += identificadore + "\n";
-            System.out.println(identificadore);
         }
         this.informacion += "LISTA DE SIMBOLOS\n";
-        System.out.println("Lista de simbolos");
         for (String simbolo : simbolos) {
             this.informacion += simbolo + "\n";
-            System.out.println(simbolo);
         }
         this.informacion += "ERRORES:\n";
-        System.out.println("listado de errores");
         for (String errore : errores) {
             this.informacion += errore + "\n";
-            System.out.println(errore);
         }
     }
 
+    /**
+     * Retornamos la informacion que obtenemos de la cadena
+     *
+     * @return
+     */
     public String getInformacion() {
         return informacion;
     }
+
+    /**
+     * Identificador de los Enteros
+     *
+     * @param cadena
+     * @param digitos
+     * @return
+     */
 
     public boolean esEntero(String cadena, String digitos) {
         int cantidadDigitos = 0;
@@ -146,6 +154,13 @@ public class Analizador {
         return (cantidadDigitos == cadena.length());
     }
 
+    /**
+     * Identificador de los Decimales
+     *
+     * @param cadena
+     * @return
+     */
+
     public boolean esDecimal(String cadena) {
         try {
             Double.parseDouble(cadena);
@@ -155,10 +170,26 @@ public class Analizador {
         }
     }
 
+    /**
+     * Identificador de
+     *
+     * @param cadena
+     * @return
+     */
+
     public boolean puntoPorEnMedio(String cadena) {
         return (!".".equals(cadena.substring(0, 1)))
                 && (!".".equals(cadena.substring(cadena.length() - 1, cadena.length())));
     }
+
+    /**
+     * Identificador del ID
+     *
+     * @param cadena
+     * @param abecedario
+     * @param digitos
+     * @return
+     */
 
     public boolean esIdentificador(String cadena, String abecedario, String digitos) {
         int contadorId = 0;
@@ -172,6 +203,14 @@ public class Analizador {
                 && (esLetra(String.valueOf(cadena.substring(0, 1)), abecedario)));
     }
 
+    /**
+     * Identidicador de la Letra
+     *
+     * @param caracter
+     * @param abecedario
+     * @return
+     */
+
     public boolean esLetra(String caracter, String abecedario) {
         for (int i = 0; i < abecedario.length(); i++) {
             if (caracter.equalsIgnoreCase(String.valueOf(abecedario.charAt(i)))) {
@@ -180,6 +219,14 @@ public class Analizador {
         }
         return false;
     }
+
+    /**
+     * Identificador de palabras
+     *
+     * @param cadena
+     * @param abecedario
+     * @return
+     */
 
     public boolean purasLetras(String cadena, String abecedario) {
         int contador = 0;
@@ -194,10 +241,22 @@ public class Analizador {
         return (contador == cadena.length());
     }
 
+    /**
+     * Identidicador de los Espacios
+     *
+     * @param cadena
+     * @return
+     */
+
     public boolean esEspacio(String cadena) {
         return (cadena.equals(" "));
     }
 
+    /**
+     * ASCII de los Simbolos
+     *
+     * @return
+     */
     public String listadoSimbolos() {
         String simbolos = "";
 
@@ -220,6 +279,14 @@ public class Analizador {
         return simbolos;
     }
 
+    /**
+     * Identificador de los Simbolos
+     *
+     * @param cadena
+     * @param simbolos
+     * @return
+     */
+
     public boolean todosSimbolos(String cadena, String simbolos) {
         int contadorSimbolos = 0;
         for (int i = 0; i < cadena.length(); i++) {
@@ -232,9 +299,22 @@ public class Analizador {
         return (contadorSimbolos == cadena.length());
     }
 
+    /**
+     * Cadena en su totalidad
+     *
+     * @param cadena
+     * @return
+     */
+
     public boolean contieneSoloUnaCadena(String cadena) {
         return (!cadena.contains(" ") || !cadena.contains("\n"));
     }
+
+    /**
+     * Arraylist
+     *
+     * @return
+     */
 
     public ArrayList<String> getEnteros() {
         return enteros;
