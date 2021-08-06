@@ -45,7 +45,6 @@ public class Analizador {
      *
      * @param cadenaEntrada
      */
-
     private void analizar(String cadenaEntrada) {
         char[] arreglo = cadenaEntrada.toCharArray();
 
@@ -94,18 +93,14 @@ public class Analizador {
                     this.simbolos.add(String.valueOf(parteCadena.charAt(i)));
                 }
             }
-            if (!esEntero(parteCadena, digitos)
-                    && (!esDecimal(parteCadena))
-                    && !esIdentificador(parteCadena, abecedario, digitos)
-                    && (!todosSimbolos(parteCadena, listadoSimbolos()))
-                    && (!purasLetras(parteCadena, abecedario))) {
+            if (!esEntero(parteCadena, digitos) && (!esDecimal(parteCadena)) && !esIdentificador(parteCadena, abecedario, digitos) && (!todosSimbolos(parteCadena, listadoSimbolos())) && (!purasLetras(parteCadena, abecedario))) {
                 this.errores.add(parteCadena);
             }
         }
 
         this.informacion += "NUMEROS ENTEROS:\n";
         for (String parte1 : enteros) {
-            this.informacion += parte1 + "\n";;
+            this.informacion += parte1 + "\n";
         }
         this.informacion += "NUMEROS DECIMALES\n";
         for (String parte1 : decimales) {
@@ -141,7 +136,6 @@ public class Analizador {
      * @param digitos
      * @return
      */
-
     public boolean esEntero(String cadena, String digitos) {
         int cantidadDigitos = 0;
         for (int i = 0; i < cadena.length(); i++) {
@@ -160,7 +154,6 @@ public class Analizador {
      * @param cadena
      * @return
      */
-
     public boolean esDecimal(String cadena) {
         try {
             Double.parseDouble(cadena);
@@ -176,7 +169,6 @@ public class Analizador {
      * @param cadena
      * @return
      */
-
     public boolean puntoPorEnMedio(String cadena) {
         return (!".".equals(cadena.substring(0, 1)))
                 && (!".".equals(cadena.substring(cadena.length() - 1, cadena.length())));
@@ -190,7 +182,6 @@ public class Analizador {
      * @param digitos
      * @return
      */
-
     public boolean esIdentificador(String cadena, String abecedario, String digitos) {
         int contadorId = 0;
         for (int i = 0; i < cadena.length(); i++) {
@@ -210,7 +201,6 @@ public class Analizador {
      * @param abecedario
      * @return
      */
-
     public boolean esLetra(String caracter, String abecedario) {
         for (int i = 0; i < abecedario.length(); i++) {
             if (caracter.equalsIgnoreCase(String.valueOf(abecedario.charAt(i)))) {
@@ -227,7 +217,6 @@ public class Analizador {
      * @param abecedario
      * @return
      */
-
     public boolean purasLetras(String cadena, String abecedario) {
         int contador = 0;
         for (int i = 0; i < cadena.length(); i++) {
@@ -247,7 +236,6 @@ public class Analizador {
      * @param cadena
      * @return
      */
-
     public boolean esEspacio(String cadena) {
         return (cadena.equals(" "));
     }
@@ -286,7 +274,6 @@ public class Analizador {
      * @param simbolos
      * @return
      */
-
     public boolean todosSimbolos(String cadena, String simbolos) {
         int contadorSimbolos = 0;
         for (int i = 0; i < cadena.length(); i++) {
@@ -305,7 +292,6 @@ public class Analizador {
      * @param cadena
      * @return
      */
-
     public boolean contieneSoloUnaCadena(String cadena) {
         return (!cadena.contains(" ") || !cadena.contains("\n"));
     }
@@ -315,7 +301,6 @@ public class Analizador {
      *
      * @return
      */
-
     public ArrayList<String> getEnteros() {
         return enteros;
     }

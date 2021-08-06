@@ -10,13 +10,21 @@ package Objetos;
  * @author emili
  */
 public class Posicion {
-    
+
     private int posicion;
 
+    /**
+     *
+     * @param posicon
+     */
     public Posicion(int posicon) {
         this.posicion = posicon;
     }
 
+    /**
+     *
+     * @return
+     */
     public int getPosicon() {
         return posicion;
     }
